@@ -1,0 +1,5 @@
+﻿@model IEnumerable<Tag>
+@foreach (var tag in Model)
+{
+    <a href="/posts/tag/@tag.Url" class="badge bg-@tag.Color bg-opacity-10 text-@tag.Color mb-2 fw-bold">@tag.Text</a>
+}
