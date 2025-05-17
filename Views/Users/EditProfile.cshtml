@@ -1,0 +1,41 @@
+﻿@{
+	ViewData["Title"] = "Edit Profile";
+}
+@model EditProfileViewModel
+<form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-md-2">
+			<div class="bg-white p-2">
+				<img src="/img/@Model.Image" class="img-fluid" />
+				<input type="hidden" asp-for="Image" />
+				<input asp-for="ImageUpload" class="form-control form-control-sm mt-2" />
+			</div>
+		</div>
+		<div class="col-md-10">
+			<div class="bg-white p-4">
+				<h5>Profilini Düzenle</h5>
+				@if (!string.IsNullOrEmpty(Model.Message))
+				{
+					<div class="alert alert-@Model.AlertColor">@Model.Message</div>
+				}
+				<div asp-validation-summary="All" class="text-danger"></div>
+				<div class="mb-3">
+					<label asp-for="UserName" class="form-label">Kullanıcı Adı</label>
+					<input asp-for="UserName" class="form-control" />
+					<span asp-validation-for="UserName" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Name" class="form-label">Ad Soyad</label>
+					<input asp-for="Name" class="form-control" />
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Email" class="form-label">Eposta</label>
+					<input asp-for="Email" class="form-control" />
+					<span asp-validation-for="Email" class="text-danger"></span>
+				</div>
+				<button type="submit" class="btn btn-primary">Kaydet</button>
+			</div>
+		</div>
+	</div>
+</form>

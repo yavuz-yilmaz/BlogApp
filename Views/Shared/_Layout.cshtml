@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="~/css/style.css">
+	<title>@ViewData["Title"] - BlogApp</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg bg-white shadow-sm">
+	<div class="container">
+		<a href="/posts" class="navbar-brand">
+			<i class="bi bi-code"></i> BlogApp
+		</a>
+
+		<!-- Navbar Toggler Button -->
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+		        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<!-- Collapsible Content -->
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ms-auto">
+				@if (User.Identity!.IsAuthenticated)
+				{
+					<li class="nav-item">
+						<a href="/Posts/List" class="nav-link">Posts</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+						   data-bs-toggle="dropdown" aria-expanded="false">
+							@User.Identity.Name
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+							<li>
+								<a class="dropdown-item"
+								   href="/profile/@User.FindFirstValue(ClaimTypes.Name)">Profil</a>
+							</li>
+							<li>
+								<a class="dropdown-item"
+								   href="/Users/ChangePassword">Şifreni Değiştir</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a href="/auth/logout" class="nav-link">Logout</a>
+					</li>
+				}
+				else
+				{
+					<li class="nav-item">
+						<a href="/auth/login" class="nav-link">Login</a>
+					</li>
+					<li class="nav-item">
+						<a href="/auth/register" class="nav-link">Register</a>
+					</li>
+				}
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container mt-3">
+	@RenderBody()
+</div>
+
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+@RenderSection("Scripts", required: false)
+</body>
+
+</html>

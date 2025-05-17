@@ -1,0 +1,87 @@
+@{
+	ViewData["Title"] = "Yazı Düzenle";
+}
+
+@model PostCreateViewModel
+
+<form action="Edit" method="post" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-9">
+			<div class="bg-white p-4">
+				<h1>Yazı Düzenle</h1>
+				<input type="hidden" asp-for="PostId">
+				<div asp-validation-summary="All" class="text-danger"></div>
+				<div class="mb-3">
+					<label asp-for="Title" class="form-label"></label>
+					<input asp-for="Title" class="form-control">
+					<span asp-validation-for="Title" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Description" class="form-label"></label>
+					<input asp-for="Description" class="form-control">
+					<span asp-validation-for="Description" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Url" class="form-label"></label>
+					<input asp-for="Url" class="form-control">
+					<span asp-validation-for="Url" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label asp-for="ImageUpload" class="form-label"></label>
+					<input type="hidden" asp-for="Image" />
+					<input asp-for="ImageUpload" class="form-control">
+					<span asp-validation-for="ImageUpload" class="text-danger"></span>
+				</div>
+				
+				<div class="mb-3">
+					<label asp-for="Content" class="form-label"></label>
+					<textarea asp-for="Content" class="form-control"></textarea>
+					<span asp-validation-for="Content" class="text-danger"></span>
+				</div>
+
+				@if (User.FindFirstValue(ClaimTypes.Role) == "admin")
+				{
+					<div class="form-check mb-3">
+						<input asp-for="IsActive" class="form-check-input" />
+						<label asp-for="IsActive" class="form-check-label">Aktif</label>
+					</div>
+				}
+				<button type="submit" class="btn btn-primary">Kaydet</button>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="bg-white p-4">
+				<h4>Etiketler</h4>
+				@foreach (var tag in ViewBag.Tags)
+				{
+					<div class="form-check">
+						<input class="form-check-input"
+							   type="checkbox"
+							   name="tagIds"
+							   id="tag_@tag.TagId"
+							   value="@tag.TagId"
+							 @(Model.Tags.Any(t => t.TagId == tag.TagId) ? "checked" : "")
+							   
+						/>
+						<label class="form-check-label" for="tag_@tag.TagId">
+							@tag.Text
+						</label>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</form>
+
+@section Scripts {
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.3.0/tinymce.min.js"
+			integrity="sha512-RUZ2d69UiTI+LdjfDCxqJh5HfjmOcouct56utQNVRjr90Ea8uHQa+gCxvxDTC9fFvIGP+t4TDDJWNTRV48tBpQ=="
+			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script>
+		tinymce.init({
+			selector: '#Content'
+		});
+	</script>
+}
